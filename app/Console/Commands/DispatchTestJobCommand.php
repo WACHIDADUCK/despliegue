@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Jobs\TestJob; // Asegúrate de importar el Job
 
 class DispatchTestJobCommand extends Command
 {
@@ -11,25 +12,27 @@ class DispatchTestJobCommand extends Command
      *
      * @var string
      */
-    // protected $signature = 'app:dispatch-test-job-command';
-    protected $signature = 'dispatch:test-job';
-
+    protected $signature = 'dispatch:test-job'; // Nombre del comando
 
     /**
      * The console command description.
      *
      * @var string
      */
-    // protected $description = 'Command description';
-    protected $description = 'Dispatch a test job';
-
+    protected $description = 'Dispatch a test job'; // Descripción del comando
 
     /**
      * Execute the console command.
+     *
+     * @return int
      */
-    public function handle(){
-    dispatch(new DispatchTestJobCommand());
-    $this->info('Test job dispatched.');
+    public function handle()
+    {
+        // Despacha el Job a la cola
+        dispatch(new TestJob());
+
+        // Mensaje en la consola confirmando el despacho
+        $this->info('Test job dispatched!');
+        return 0;
     }
-    
 }
