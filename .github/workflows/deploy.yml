@@ -2,13 +2,16 @@ name: deploy
 on:
   workflow_dispatch:
 
-  jobs:
-    deploy:
-    name: Deploy to VPS
-    runs-on: ubuntu-22.04
-    with:
-      host: 161.22.42.207
-      port: 2222
-      username: wachi
-      key: ${{secrets.PRIVATE_KEY}}
-      script: "cd /var/www/html/despliegue; git pull origin main; npm run build"
+jobs:
+  deploy:
+  name: Deploy to VPS
+  runs-on: ubuntu-22.04
+  steps:
+      - name: Deploy
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: 161.22.42.207
+        port: 2222
+        username: wachi
+        key: ${{secrets.PRIVATE_KEY}}
+        script: "cd /var/www/html/despliegue; git pull origin main; npm run build"
